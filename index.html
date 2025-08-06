@@ -2,40 +2,74 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Карина — Тату-мастер</title>
   <style>
+    /* Общий стиль */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      background-color: #0d0d0d;
+      background: #0d0d0d;
       color: #f2f2f2;
-      font-family: 'Courier New', Courier, monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
+      font-family: 'Courier New', monospace;
+      overflow-x: hidden;
     }
 
-    a {
-      color: #ff004f;
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      position: fixed;
+      width: 100%;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    nav a {
+      color: #ff0055;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      text-shadow: 0 0 5px #ff0055;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 20px 60px;
+      display: none;
+      text-align: center;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 10px #ff0055;
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    a.link {
+      color: #00fff7;
       text-decoration: none;
     }
 
-    .container {
-      max-width: 600px;
-      padding: 20px;
-    }
-
-    .glitch-box {
-      margin-top: 30px;
-    }
-
+    /* Глітч заголовок */
     .glitch {
-      color: white;
       font-size: 48px;
+      color: white;
       position: relative;
+      display: inline-block;
     }
 
     .glitch::before,
@@ -43,18 +77,17 @@
       content: attr(data-text);
       position: absolute;
       left: 0;
+      width: 100%;
     }
 
     .glitch::before {
-      animation: glitchTop 1s infinite linear alternate-reverse;
       color: #ff00c8;
-      z-index: -1;
+      animation: glitchTop 1s infinite linear alternate-reverse;
     }
 
     .glitch::after {
-      animation: glitchBottom 1s infinite linear alternate-reverse;
       color: #00fff7;
-      z-index: -2;
+      animation: glitchBottom 1s infinite linear alternate-reverse;
     }
 
     @keyframes glitchTop {
@@ -74,22 +107,65 @@
       80% { transform: translate(1px, -2px); }
       100% { transform: translate(0, 0); }
     }
+
+    /* Фоновый туман */
+    .fog {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://i.imgur.com/8bYxUjt.png') repeat;
+      opacity: 0.05;
+      animation: fogMove 100s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fogMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #777;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Карина — Тату-мастер из Днепра</h1>
-    <p>🔥 Специализация — мрачный стиль. Работы в 
-      <a href="https://t.me/kkarenjatgk" target="_blank">Telegram</a> и 
-      <a href="https://www.instagram.com/kkarenjatattoo" target="_blank">Instagram</a>.
+  <div class="fog"></div>
+  <nav>
+    <a href="#" onclick="showTab('home')">Главная</a>
+    <a href="#" onclick="showTab('portfolio')">Портфолио</a>
+    <a href="#" onclick="showTab('contacts')">Контакты</a>
+  </nav>
+
+  <section id="home" class="active">
+    <h1 class="glitch" data-text="Карина">Карина</h1>
+    <p>Тату-мастер из Днепра. Мрачный, атмосферный стиль. <br>Работы — это эмоции, боль, искусство. Добро пожаловать.</p>
+  </section>
+
+  <section id="portfolio">
+    <h1>Портфолио</h1>
+    <p>Смотри работы в <a class="link" href="https://t.me/kkarenjatgk" target="_blank">Telegram</a> и 
+    <a class="link" href="https://www.instagram.com/kkarenjatattoo" target="_blank">Instagram</a>.</p>
+  </section>
+
+  <section id="contacts">
+    <h1>Контакты</h1>
+    <p>
+      Telegram: <a class="link" href="https://t.me/kkarenjatgk" target="_blank">@kkarenjatgk</a><br>
+      Instagram: <a class="link" href="https://www.instagram.com/kkarenjatattoo" target="_blank">@kkarenjatattoo</a>
     </p>
-    <div class="glitch-box">
-      <div class="glitch" data-text="TATTOO">TATTOO</div>
-    </div>
-  </div>
+  </section>
+
+  <footer>© 2025 Карина Tattoo</footer>
 
   <script>
-    console.log("Сайт Карины загружен.");
+    function showTab(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
   </script>
 </body>
 </html>
