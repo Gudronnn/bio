@@ -2,91 +2,115 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Запись к Карине</title>
   <style>
     body {
       margin: 0;
-      background: #0d0d0d;
-      font-family: 'Courier New', Courier, monospace;
-      color: #eaeaea;
-    }
-
-    header {
-      text-align: center;
-      padding: 40px 20px;
-      background: rgba(0, 0, 0, 0.8);
-    }
-
-    h1 {
-      color: #ff0066;
-      text-shadow: 0 0 10px #ff0066;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(#000000cc, #1a1a1acc), url('data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid #333;
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 50, 0.3);
+      width: 90%;
+      max-width: 400px;
     }
 
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #f44;
     }
 
-    input, textarea {
+    input, textarea, button {
       width: 100%;
-      padding: 10px;
-      background: #1a1a1a;
-      border: 1px solid #444;
-      color: #fff;
-      margin-top: 5px;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
       border-radius: 5px;
+      background: #222;
+      color: #fff;
+      font-size: 16px;
     }
 
     button {
-      margin-top: 30px;
-      padding: 10px 20px;
-      background: #ff0066;
-      border: none;
-      color: #fff;
-      font-weight: bold;
+      background: #f44;
       cursor: pointer;
-      border-radius: 5px;
       transition: 0.3s;
     }
 
     button:hover {
-      background: #ff3388;
-      box-shadow: 0 0 10px #ff0066;
+      background: #c22;
+    }
+
+    .success {
+      margin-top: 15px;
+      color: #0f0;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Запись на сеанс</h1>
-  </header>
-
   <div class="container">
-    <form action="#">
-      <label for="name">Имя</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="date">Дата</label>
-      <input type="date" id="date" name="date" required>
-
-      <label for="time">Время</label>
-      <input type="time" id="time" name="time" required>
-
-      <label for="note">Комментарий</label>
-      <textarea id="note" name="note" rows="4" placeholder="Что хочешь набить?"></textarea>
-
+    <h2>Запись к Карине</h2>
+    <form id="booking-form">
+      <input type="text" id="name" placeholder="Имя" required>
+      <input type="date" id="date" required>
+      <input type="time" id="time" required>
+      <textarea id="comment" rows="3" placeholder="Комментарий"></textarea>
       <button type="submit">Отправить</button>
     </form>
+    <div id="success" class="success" style="display: none;">✅ Запись отправлена!</div>
   </div>
+
+  <script>
+    const form = document.getElementById("booking-form");
+    const successMessage = document.getElementById("success");
+
+    const BOT_TOKEN = "8277778596:AAEqjbOR3MuBw8g1hqoKRrzrfzCpSR3WYLc";
+    const CHAT_ID = "5440644198";
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const comment = document.getElementById("comment").value;
+
+      const message = `🖤 Новая запись:\n\n👤 Имя: ${name}\n📅 Дата: ${date}\n🕒 Время: ${time}\n💬 Комментарий: ${comment}`;
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+        }),
+      })
+      .then(response => {
+        if (response.ok) {
+          successMessage.style.display = "block";
+          form.reset();
+        } else {
+          alert("Ошибка при отправке. Попробуйте позже.");
+        }
+      })
+      .catch(error => {
+        alert("Ошибка соединения. Проверьте интернет.");
+        console.error(error);
+      });
+    });
+  </script>
 </body>
 </html>
