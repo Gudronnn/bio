@@ -7,7 +7,7 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(#000000cc, #1a1a1acc), url('data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...');
+      background: linear-gradient(#000000cc, #1a1a1acc), url('https://images.unsplash.com/photo-1602524811447-519f53f5171d');
       background-size: cover;
       background-position: center;
       color: #fff;
@@ -58,6 +58,10 @@
       color: #0f0;
       text-align: center;
     }
+
+    input[type="file"] {
+      background: #111;
+    }
   </style>
 </head>
 <body>
@@ -68,6 +72,7 @@
       <input type="date" id="date" required>
       <input type="time" id="time" required>
       <textarea id="comment" rows="3" placeholder="Комментарий"></textarea>
+      <input type="file" id="photos" accept="image/*" multiple>
       <button type="submit">Отправить</button>
     </form>
     <div id="success" class="success" style="display: none;">✅ Запись отправлена!</div>
@@ -80,36 +85,41 @@
     const BOT_TOKEN = "8277778596:AAEqjbOR3MuBw8g1hqoKRrzrfzCpSR3WYLc";
     const CHAT_ID = "5440644198";
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const name = document.getElementById("name").value;
       const date = document.getElementById("date").value;
       const time = document.getElementById("time").value;
       const comment = document.getElementById("comment").value;
+      const photos = document.getElementById("photos").files;
 
       const message = `🖤 Новая запись:\n\n👤 Имя: ${name}\n📅 Дата: ${date}\n🕒 Время: ${time}\n💬 Комментарий: ${comment}`;
-
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      
+      // 1. Отправим текст
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: CHAT_ID,
           text: message,
         }),
-      })
-      .then(response => {
-        if (response.ok) {
-          successMessage.style.display = "block";
-          form.reset();
-        } else {
-          alert("Ошибка при отправке. Попробуйте позже.");
-        }
-      })
-      .catch(error => {
-        alert("Ошибка соединения. Проверьте интернет.");
-        console.error(error);
       });
+
+      // 2. Отправим каждое фото
+      for (let i = 0; i < photos.length; i++) {
+        const formData = new FormData();
+        formData.append("chat_id", CHAT_ID);
+        formData.append("photo", photos[i]);
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+          method: "POST",
+          body: formData,
+        });
+      }
+
+      successMessage.style.display = "block";
+      form.reset();
     });
   </script>
 </body>
