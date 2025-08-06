@@ -2,92 +2,80 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Карина — Тату-мастер</title>
   <style>
-    /* Общий стиль */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #0d0d0d;
-      color: #f2f2f2;
-      font-family: 'Courier New', monospace;
+      margin: 0;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAa0lEQVR4AWP4//8/AyUYyMDAwMDg0aNH/1yYmJj8+fPHgwcP/v//PyMjIgIlJycDCwsoA4j4+Pi4uLjZt2gTHTlM1IBIS8fPlyxsbGePXtGrl27/u7dOysrK5c+fP9u/fP4QjgwMQK5RNU3WKwAABe+goAwDUXkMXhnyBQwAAAABJRU5ErkJggg==') center center / cover fixed no-repeat;
+      font-family: 'Courier New', Courier, monospace;
+      color: #eaeaea;
       overflow-x: hidden;
     }
 
+    header {
+      padding: 40px 20px 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      color: #ff0066;
+      text-shadow: 0 0 10px #ff0066;
+    }
+
+    .info {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
     nav {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.4);
-      position: fixed;
-      width: 100%;
-      z-index: 10;
-      backdrop-filter: blur(10px);
+      margin: 20px 0;
+      text-align: center;
     }
 
     nav a {
-      color: #ff0055;
+      color: #00ffff;
       text-decoration: none;
-      font-size: 18px;
+      margin: 0 15px;
+      font-weight: bold;
       transition: 0.3s;
     }
 
     nav a:hover {
-      text-shadow: 0 0 5px #ff0055;
+      color: #ff00ff;
+      text-shadow: 0 0 5px #ff00ff;
     }
 
-    section {
-      min-height: 100vh;
-      padding: 120px 20px 60px;
-      display: none;
-      text-align: center;
-    }
-
-    section.active {
-      display: block;
-    }
-
-    h1 {
-      font-size: 3rem;
-      text-shadow: 0 0 10px #ff0055;
-    }
-
-    p {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    a.link {
-      color: #00fff7;
-      text-decoration: none;
-    }
-
-    /* Глітч заголовок */
     .glitch {
-      font-size: 48px;
+      font-size: 64px;
+      font-weight: bold;
       color: white;
       position: relative;
-      display: inline-block;
+      text-align: center;
+      margin-top: 60px;
     }
 
-    .glitch::before,
-    .glitch::after {
+    .glitch::before, .glitch::after {
       content: attr(data-text);
       position: absolute;
       left: 0;
       width: 100%;
+      overflow: hidden;
     }
 
     .glitch::before {
-      color: #ff00c8;
       animation: glitchTop 1s infinite linear alternate-reverse;
+      color: #ff00c8;
+      z-index: -1;
     }
 
     .glitch::after {
-      color: #00fff7;
       animation: glitchBottom 1s infinite linear alternate-reverse;
+      color: #00fff7;
+      z-index: -2;
     }
 
     @keyframes glitchTop {
@@ -108,64 +96,53 @@
       100% { transform: translate(0, 0); }
     }
 
-    /* Фоновый туман */
-    .fog {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('https://i.imgur.com/8bYxUjt.png') repeat;
-      opacity: 0.05;
-      animation: fogMove 100s linear infinite;
-      z-index: 0;
-    }
-
-    @keyframes fogMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 1000px 1000px; }
-    }
-
-    footer {
+    .links {
       text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #777;
+      margin-top: 50px;
+    }
+
+    .links a {
+      display: inline-block;
+      background: #222;
+      padding: 10px 20px;
+      margin: 10px;
+      color: #00ffff;
+      text-decoration: none;
+      border: 1px solid #00ffff;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+
+    .links a:hover {
+      background: #00ffff;
+      color: #000;
+      box-shadow: 0 0 10px #00ffff;
     }
   </style>
 </head>
 <body>
-  <div class="fog"></div>
+  <header>
+    <h1>Карина — Тату-мастер</h1>
+    <div class="info">21 год, город Днепр</div>
+  </header>
+
   <nav>
-    <a href="#" onclick="showTab('home')">Главная</a>
-    <a href="#" onclick="showTab('portfolio')">Портфолио</a>
-    <a href="#" onclick="showTab('contacts')">Контакты</a>
+    <a href="#about">Обо мне</a>
+    <a href="zapis.html">Запись</a>
+    <a href="https://t.me/kkarenjatgk" target="_blank">Telegram</a>
+    <a href="https://www.instagram.com/kkarenjatattoo" target="_blank">Instagram</a>
   </nav>
 
-  <section id="home" class="active">
-    <h1 class="glitch" data-text="Карина">Карина</h1>
-    <p>Тату-мастер из Днепра. Мрачный, атмосферный стиль. <br>Работы — это эмоции, боль, искусство. Добро пожаловать.</p>
-  </section>
+  <div class="glitch" data-text="TATTOO CHAOS">TATTOO CHAOS</div>
 
-  <section id="portfolio">
-    <h1>Портфолио</h1>
-    <p>Смотри работы в <a class="link" href="https://t.me/kkarenjatgk" target="_blank">Telegram</a> и 
-    <a class="link" href="https://www.instagram.com/kkarenjatattoo" target="_blank">Instagram</a>.</p>
-  </section>
-
-  <section id="contacts">
-    <h1>Контакты</h1>
-    <p>
-      Telegram: <a class="link" href="https://t.me/kkarenjatgk" target="_blank">@kkarenjatgk</a><br>
-      Instagram: <a class="link" href="https://www.instagram.com/kkarenjatattoo" target="_blank">@kkarenjatattoo</a>
-    </p>
-  </section>
-
-  <footer>© 2025 Карина Tattoo</footer>
+  <div class="links">
+    <a href="zapis.html">🗓 Записаться</a>
+    <a href="https://t.me/kkarenjatgk" target="_blank">💬 Telegram</a>
+    <a href="https://www.instagram.com/kkarenjatattoo" target="_blank">📷 Instagram</a>
+  </div>
 
   <script>
-    function showTab(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+    console.log("Карина — мрачный тату-мастер. Страница загружена.");
   </script>
 </body>
 </html>
