@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Запись к Карине</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0d0d0d;
+      font-family: 'Courier New', Courier, monospace;
+      color: #eaeaea;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    h1 {
+      color: #ff0066;
+      text-shadow: 0 0 10px #ff0066;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #333;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      background: #1a1a1a;
+      border: 1px solid #444;
+      color: #fff;
+      margin-top: 5px;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #ff0066;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff3388;
+      box-shadow: 0 0 10px #ff0066;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Запись на сеанс</h1>
+  </header>
+
+  <div class="container">
+    <form action="#">
+      <label for="name">Имя</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="date">Дата</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Время</label>
+      <input type="time" id="time" name="time" required>
+
+      <label for="note">Комментарий</label>
+      <textarea id="note" name="note" rows="4" placeholder="Что хочешь набить?"></textarea>
+
+      <button type="submit">Отправить</button>
+    </form>
+  </div>
+</body>
+</html>
